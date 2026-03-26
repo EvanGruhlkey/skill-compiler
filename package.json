@@ -2,10 +2,20 @@
   "name": "skill-compiler",
   "version": "0.0.1",
   "private": true,
-  "description": "Decision-tree skills; TypeScript CLI runner in a later step.",
+  "description": "Decision-tree skills as JSON; CLI runner validates and steps through graphs.",
   "type": "module",
-  "scripts": {},
+  "bin": {
+    "skill-compiler": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "skill": "node dist/cli.js"
+  },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "typescript": "^5.7.3"
   }
 }
