@@ -1,0 +1,27 @@
+{
+  "id": "issue-triage",
+  "start": "ask-severity",
+  "nodes": {
+    "ask-severity": {
+      "kind": "choice",
+      "prompt": "How severe is the issue?",
+      "branches": {
+        "blocker": "escalate-now",
+        "major": "schedule-soon",
+        "minor": "backlog"
+      }
+    },
+    "escalate-now": {
+      "kind": "end",
+      "text": "Page on-call and open an incident."
+    },
+    "schedule-soon": {
+      "kind": "end",
+      "text": "Schedule a fix in the current sprint."
+    },
+    "backlog": {
+      "kind": "end",
+      "text": "Add to the backlog and review in grooming."
+    }
+  }
+}

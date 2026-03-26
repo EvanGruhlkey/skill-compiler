@@ -1,0 +1,11 @@
+{
+  "name": "skill-compiler",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Decision-tree skills; TypeScript CLI runner in a later step.",
+  "type": "module",
+  "scripts": {},
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "weather-umbrella",
+  "start": "ask-rain",
+  "nodes": {
+    "ask-rain": {
+      "kind": "choice",
+      "prompt": "Is it raining?",
+      "branches": {
+        "yes": "take-umbrella",
+        "no": "skip-umbrella"
+      }
+    },
+    "take-umbrella": {
+      "kind": "end",
+      "text": "Bring an umbrella."
+    },
+    "skip-umbrella": {
+      "kind": "end",
+      "text": "You can leave the umbrella at home."
+    }
+  }
+}
