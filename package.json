@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "skill": "node dist/cli.js"
+    "skill": "node dist/cli.js",
+    "export-skill": "node dist/cli.js export"
   },
   "engines": {
     "node": ">=18"
