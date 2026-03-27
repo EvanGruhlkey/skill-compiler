@@ -1,5 +1,31 @@
 import type { Skill } from "./types.js";
 
+function toClaudeSkillName(skillId: string): string {
+  const s = skillId
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return s.length > 0 ? s : "skill";
+}
+
+/**
+ * Claude Code–style `SKILL.md`: YAML frontmatter plus the same body as {@link skillToSkillsMd}.
+ * Graph JSON remains canonical; frontmatter `description` should summarize when to invoke the skill.
+ */
+export function skillToClaudeSkillMd(skill: Skill, description: string): string {
+  const name = toClaudeSkillName(skill.id);
+  const desc = description.trim() || `Decision workflow inferred from recording: ${skill.id}.`;
+  const frontmatter =
+    "---\n" +
+    `name: ${name}\n` +
+    `description: ${JSON.stringify(desc)}\n` +
+    'argument-hint: " "\n' +
+    "user-invocable: true\n" +
+    "---\n\n";
+  return frontmatter + skillToSkillsMd(skill);
+}
+
 /**
  * Markdown suitable for skills.md / SKILL.md / agent rule files.
  * Graph JSON remains canonical; this is a human- and agent-readable view.

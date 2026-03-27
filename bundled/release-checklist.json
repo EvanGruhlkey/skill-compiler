@@ -1,0 +1,34 @@
+{
+  "id": "release-checklist",
+  "start": "tests-green",
+  "nodes": {
+    "tests-green": {
+      "kind": "choice",
+      "prompt": "Are all tests passing?",
+      "branches": {
+        "yes": "changelog-updated",
+        "no": "fix-tests-first"
+      }
+    },
+    "fix-tests-first": {
+      "kind": "end",
+      "text": "Fix failing tests before releasing."
+    },
+    "changelog-updated": {
+      "kind": "choice",
+      "prompt": "Is CHANGELOG updated?",
+      "branches": {
+        "yes": "ship-it",
+        "no": "update-changelog"
+      }
+    },
+    "update-changelog": {
+      "kind": "end",
+      "text": "Update CHANGELOG.md, then re-run this checklist."
+    },
+    "ship-it": {
+      "kind": "end",
+      "text": "Proceed with the release."
+    }
+  }
+}

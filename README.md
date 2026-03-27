@@ -54,7 +54,7 @@ video or preset or hand edit
 
 **Package role**
 
-- Ship the **CLI** (`run`, `export`, future `presets`, future `install <editor>`).
+- Ship the **CLI** (`run`, `validate`, `export`, `export-claude`, `preset`, future `install <editor>`).
 - Ship **bundled** JSON skills (common workflows) alongside the tool; they use the **same** validate → export path as user-generated skills.
 - **Video pipeline** (future) is a separate stage that only **outputs** graph JSON into that pipeline; it does not replace presets or hand-authored skills.
 
@@ -109,6 +109,38 @@ node dist/cli.js export examples/binary-choice.json -o skills.md
 
 The output is a single Markdown document you can paste or check in next to agent configs (Claude Code, Cursor, Codex, etc.). Filename is up to you; `skills.md` or product-specific names both work.
 
+### Bundled presets (`preset list` / `preset init`)
+
+The package ships JSON skills under `bundled/`. After `npm run build`, list names and copy one into your project (creates the directory if needed):
+
+```bash
+node dist/cli.js preset list
+node dist/cli.js preset init weather-umbrella --dir ./skills
+```
+
+Add `--export` / `-e` to also write `<skill id>.skills.md` next to the JSON (same content as the `export` command). When the tool is installed from npm, presets load from the copy of `bundled/` next to `dist/`.
+
+### Validate and Claude Code export
+
+```bash
+node dist/cli.js validate examples/binary-choice.json
+node dist/cli.js export-claude examples/binary-choice.json -o .claude/skills/weather-umbrella/SKILL.md --description "Umbrella decision after checking rain; use for quick weather branching demos."
+```
+
+`export-claude` writes YAML frontmatter (`name`, `description`, `user-invocable`, …) plus the same node body as plain export — suitable for [`.claude/skills/…/SKILL.md`](https://github.com/JCodesMore/ai-website-cloner-template/tree/master/.claude/skills) style layouts (see [ai-website-cloner-template](https://github.com/JCodesMore/ai-website-cloner-template)).
+
+### Claude Code: video → skill (this repo)
+
+This project mirrors that template’s pattern: **slash command** + project docs + phased pipeline — but the input is **video / transcript → skill graph JSON**, not a website URL.
+
+| Template idea | Here |
+|----------------|------|
+| `TARGET.md` | `VIDEO_SOURCE.md` |
+| `/clone-website` | `/video-to-skill` (skill at `.claude/skills/video-to-skill/SKILL.md`) |
+| `AGENTS.md` | `AGENTS.md` |
+
+Open Claude Code in this repo, run **`/video-to-skill`** (with an optional video path argument). The skill drives: ingest → draft JSON under `docs/skill-drafts/` → `validate` → finalize under `skills/` → `export-claude` into `.claude/skills/<id>/SKILL.md`.
+
 ## Roadmap
 
 | Phase | What | Status |
@@ -116,7 +148,7 @@ The output is a single Markdown document you can paste or check in next to agent
 | 1 | Skill JSON format + example files | Done |
 | 2 | TypeScript CLI: load a skill, step through `choice` / `end`, validate graph | Done |
 | 3 | Exporter: graph → Markdown for `skills.md` / agent skill files | Done |
-| 4 | Bundled preset skills in the npm package; CLI to materialize into a project | Planned |
+| 4 | Bundled preset skills in the npm package; CLI to materialize into a project | Done |
 | 5 | Compiler pipeline: video (and related inputs) → graph JSON | Planned |
 | 6 | Per-editor `install` (or documented paths only); polish, optional JSON Schema | Ongoing / planned |
 

@@ -7,10 +7,17 @@
   "bin": {
     "skill-compiler": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "bundled"
+  ],
   "scripts": {
     "build": "tsc",
     "skill": "node dist/cli.js",
-    "export-skill": "node dist/cli.js export"
+    "export-skill": "node dist/cli.js export",
+    "export-claude-skill": "node dist/cli.js export-claude",
+    "validate-skill": "node dist/cli.js validate",
+    "preset-list": "node dist/cli.js preset list"
   },
   "engines": {
     "node": ">=18"
